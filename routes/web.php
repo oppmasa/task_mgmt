@@ -15,18 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
 //タスク
-Route::get('/task', [TaskController::class, 'index'])->name('index');
-Route::get('/task/add', [TaskController::class, 'add'])->name('add');
-Route::post('/task/create', [TaskController::class, 'create'])->name('create');
-Route::get('/task/edit/{id}', [TaskController::class, 'edit'])->name('edit');
-Route::post('/task/update', [TaskController::class, 'update'])->name('update');
+    Route::get('/task', [TaskController::class, 'index'])->name('index');
+    Route::get('/task/add', [TaskController::class, 'add'])->name('add');
+    Route::post('/task/create', [TaskController::class, 'create'])->name('create');
+    Route::get('/task/edit/{id}', [TaskController::class, 'edit'])->name('edit');
+    Route::post('/task/update', [TaskController::class, 'update'])->name('update');
+    Route::get('/task/delete/{task_id}', [TaskController::class, 'delete'])->name('delete');
+});
