@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="deadline" class="col-sm-3 col-form-label">期限<span class="text-danger">※</span></label>
+                        <label for="deadline" class="col-sm-3 col-form-label">期限</label>
                         <div class="col-sm-9">
                             <input type="datetime-local" class="form-control @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="@if(old('deadline')){{old('deadline')}}@elseif(!empty($task)){{$task->deadline}}@endif">
                             @error('deadline')
@@ -64,13 +64,13 @@
                                                 selected
                                             @elseif($task->completion_flag === 0)
                                                 selected
-                                            @endif>作業中</option>
+                                            @endif>未対応</option>
                                     <option value="1"
                                             @if(!empty(old('completion_flag')) && old('completion_flag') === "1")
                                                 selected
                                             @elseif($task->completion_flag === 1)
                                                 selected
-                                           @endif>作業完了</option>
+                                           @endif>完了</option>
                                 </select>
                                 @error('completion_flag')
                                 <div class="invalid-feedback">

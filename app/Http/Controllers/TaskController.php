@@ -11,10 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $task_list = Task::where('user_id',Auth::id())->get();
-        return view('task.index',compact('task_list'));
+
+        $search_title = $request->search_title;
+        $task_list = Task::TaskIndex($request);
+        $check_list = self::CreatecheckList($request);
+        return view('task.index',compact('search_title','task_list','check_list'));
+    }
+
+    public function CreatecheckList($request)
+    {
+        $check_list = [];
+        if(!empty($request->completion_flag)){
+            $check_list += ['completion_flag' => 'on'];
+        }
+        if(!empty($request->deadline)){
+            $check_list += ['deadline' => 'on'];
+        }
+        return $check_list;
     }
 
     public function add()

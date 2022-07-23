@@ -14,6 +14,43 @@ class Task extends Model
 
     protected $table = 'tasks';
 
+    //タスク一覧
+    public function scopeTaskIndex($query, $request)
+    {
+
+        $where_list = self::CreateWhereList($request);
+        //「期限超過のみ」にチェックされていた場合
+        if(!empty($request->deadline)){
+            return self::where($where_list)->whereDate('deadline','<', now())->orderBy('created_at', 'desc')->paginate(5);
+        }
+
+        return self::where($where_list)->orderBy('created_at', 'desc')->paginate(5);
+    }
+
+    //DB検索条件作成
+    public function CreateWhereList($request)
+    {
+        $where_list = [['user_id',Auth::id()]];
+
+        //タスク名が検索されていた場合
+        if(!empty($request->search_title)){
+            $where_list[] = ['title', 'like', '%'.$request->search_title.'%'];
+        }
+
+        //「期限超過のみ」にチェックされていた場合
+        if(!empty($request->deadline)){
+            $where_list[] = ['deadline', '!=', null];
+        }
+
+        //「完了済みを表示」にチェックされていた場合
+        if(empty($request->completion_flag)){
+            $where_list[] = ['completion_flag', 0];
+        }
+
+        return $where_list;
+    }
+
+    //タスク作成
     public function scopeTaskCreate($query, $request)
     {
         $user_id = Auth::id();
@@ -34,6 +71,8 @@ class Task extends Model
         }
     }
 
+
+    //タスク情報アップデート
     public function scopeTaskUpdate($query, $request)
     {
         $task_id = $request->task_id;
@@ -61,6 +100,7 @@ class Task extends Model
         }
     }
 
+    //タスク削除
     public function scopeTaskDelete($query, $task_id)
     {
         $exists = self::where([['id', $task_id],['user_id', Auth::id()]])->exists();
