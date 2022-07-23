@@ -21,21 +21,36 @@
                     <div class="form-group row">
                         <label for="title" class="col-sm-3 col-form-label">タイトル<span class="text-danger">※</span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="title" name="title" placeholder="タイトル" value="@if(!empty($task)){{$task->title}}@endif">
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="タイトル" value="@if(old('title')){{old('title')}}@elseif(!empty($task)){{$task->title}}@endif">
+                            @error('title')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="contents" class="col-sm-3 col-form-label">内容</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="contents" name="contents" placeholder="内容" rows="4" cols="40">@if(!empty($task)){{$task->contents}}@endif</textarea>
+                            <textarea class="form-control @error('contents') is-invalid @enderror" id="contents" name="contents" placeholder="内容" rows="4" cols="40">@if(old('contents')){{old('contents')}}@elseif(!empty($task)){{$task->contents}}@endif</textarea>
+                            @error('contents')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="deadline" class="col-sm-3 col-form-label">期限<span class="text-danger">※</span></label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="deadline" name="deadline" value="@if(!empty($task)){{$task->deadline}}@endif">
+                            <input type="datetime-local" class="form-control @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="@if(old('deadline')){{old('deadline')}}@elseif(!empty($task)){{$task->deadline}}@endif">
+                            @error('deadline')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
 
@@ -43,10 +58,25 @@
                         <div class="form-group row">
                             <label for="status" class="col-sm-3 col-form-label">ステータス</label>
                             <div class="col-sm-9">
-                                <select class="form-select" aria-label="Default select example" name="completion_flag">
-                                    <option value="0" @if($task->completion_flag === 0) selected @endif>作業中</option>
-                                    <option value="1" @if($task->completion_flag === 1) selected @endif>作業完了</option>
+                                <select class="form-select @error('completion_flag') is-invalid @enderror" name="completion_flag">
+                                    <option value="0"
+                                            @if(old('completion_flag') && old('completion_flag') === "0")
+                                                selected
+                                            @elseif($task->completion_flag === 0)
+                                                selected
+                                            @endif>作業中</option>
+                                    <option value="1"
+                                            @if(!empty(old('completion_flag')) && old('completion_flag') === "1")
+                                                selected
+                                            @elseif($task->completion_flag === 1)
+                                                selected
+                                           @endif>作業完了</option>
                                 </select>
+                                @error('completion_flag')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                         </div>
 

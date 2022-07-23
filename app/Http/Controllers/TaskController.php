@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Task\TaskCreateRequest;
+use App\Http\Requests\Task\TaskUpdateRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -22,7 +24,7 @@ class TaskController extends Controller
         return view('task.add',compact('action','user_name'));
     }
 
-    public function create(Request $request)
+    public function create(TaskCreateRequest $request)
     {
         $model_response = Task::TaskCreate($request);
         if($model_response['commit_bool']){
@@ -33,13 +35,17 @@ class TaskController extends Controller
 
     public function edit($task_id)
     {
+        $exists = Task::where([['id', $task_id],['user_id', Auth::id()]])->exists();
+        if (!$exists) {
+            return App::Abort(404);
+        }
         $action = route('update');
         $user_name = Auth::User()->name;
         $task = Task::find($task_id);
         return view('task.edit',compact('action','user_name','task'));
     }
 
-    public function update(Request $request)
+    public function update(TaskUpdateRequest $request)
     {
         $model_response = Task::TaskUpdate($request);
         if(!$model_response['exists']){
