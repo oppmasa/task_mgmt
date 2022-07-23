@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_id')->default(0);
             $table->string('title')->unique();
             $table->text('contents')->nullable();
-            $table->datetime('deadline')->default("1900-01-01 00:00:00");
+            $table->datetime('deadline')->nullable();
             $table->tinyInteger('completion_flag')->default(0);
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->datetime("created_at")->default(DB::raw('CURRENT_TIMESTAMP'));

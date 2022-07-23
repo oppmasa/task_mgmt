@@ -16,7 +16,7 @@ class TaskCreateRequest extends FormRequest
         return [
             'title' => 'required|max:64',
             'contents' => 'nullable|max:3000',
-            'deadline' => 'required|date',
+            'deadline' => 'nullable|date',
         ];
     }
     public function attributes()
