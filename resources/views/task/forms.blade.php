@@ -11,14 +11,14 @@
                 @endif
                 <form class="forms-sample" action="{{$action}}" method="post">
                     @csrf
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <label for="exampleInputUsername2" class="col-sm-3 col-form-label">ユーザー名</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" disabled value="{{$user_name}}">
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <label for="title" class="col-sm-3 col-form-label">タイトル<span class="text-danger">※</span></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="タイトル" value="@if(old('title')){{old('title')}}@elseif(!empty($task)){{$task->title}}@endif">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <label for="contents" class="col-sm-3 col-form-label">内容</label>
                         <div class="col-sm-9">
                             <textarea class="form-control @error('contents') is-invalid @enderror" id="contents" name="contents" placeholder="内容" rows="4" cols="40">@if(old('contents')){{old('contents')}}@elseif(!empty($task)){{$task->contents}}@endif</textarea>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <label for="deadline" class="col-sm-3 col-form-label">期限</label>
                         <div class="col-sm-9">
                             <input type="datetime-local" class="form-control @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="@if(old('deadline')){{old('deadline')}}@elseif(!empty($task)){{$task->deadline}}@endif">
@@ -55,7 +55,7 @@
                     </div>
 
                     @if(!empty($task))
-                        <div class="form-group row">
+                        <div class="form-group row mb-3">
                             <label for="status" class="col-sm-3 col-form-label">ステータス</label>
                             <div class="col-sm-9">
                                 <select class="form-select @error('completion_flag') is-invalid @enderror" name="completion_flag">
@@ -86,7 +86,7 @@
                     <div class="col-sm-12 d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary me-2">@if(!empty($task))更新@else追加@endif</button>
                         @if(!empty($task))
-                            <a class="btn btn-light" href="{{route('delete',['task_id' => $task->id])}}" onclick="window.confirm('これが確認ダイアログです。')">削除</a>
+                            <a class="btn btn-danger me-2" href="{{route('delete',['task_id' => $task->id])}}" onclick="window.confirm('これが確認ダイアログです。')">削除</a>
                         @endif
                         <a class="btn btn-light" href="{{route('index')}}">キャンセル</a>
                     </div>
