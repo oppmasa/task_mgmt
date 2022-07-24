@@ -20,7 +20,7 @@
                     </div>
                 @endif
                 <div class="text-end">
-                    <a href="{{route('add')}}" class="btn btn-primary me-2">＋タスクの追加</a>
+                    <a href="{{route('add')}}" class="btn btn-primary m-2">＋タスクの追加</a>
                 </div>
                 <div class="table-responsive">
                     @if(!$task_list->isEmpty())
@@ -47,8 +47,8 @@
                                 <td>{{$task->title}}</td>
                                 <td>@if(empty($task->deadline))-@else{{$task->deadline}}@endif</td>
                                 <td>
-                                    <div class="text-right">
-                                        <a href="{{route('edit',$task->id)}}" class="btn btn-primary">編集</a>
+                                    <div class="text-end me-5">
+                                        <a href="{{route('edit',$task->id)}}" class="btn btn-secondary">編集</a>
                                     </div>
                                 </td>
                             </tr>
