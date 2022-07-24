@@ -58,7 +58,7 @@ class RegisterController extends Controller
         $token_parts = json_encode(['email'=>$request->email,'name'=>$request->name]);
         $email_confirmation_token = Crypt::encryptString($token_parts);
 
-        $user = User::create([
+       User::create([
             'name' => $name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

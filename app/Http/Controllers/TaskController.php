@@ -15,11 +15,11 @@ class TaskController extends Controller
     {
         $search_title = $request->search_title;
         $task_list = Task::TaskIndex($request);
-        $check_list = self::CreatecheckList($request);
+        $check_list = self::createchecklist($request);
         return view('task.index',compact('search_title','task_list','check_list'));
     }
 
-    public function CreatecheckList($request)
+    public function createchecklist($request): array
     {
         $check_list = [];
         if(!empty($request->completion_flag)){
@@ -78,7 +78,7 @@ class TaskController extends Controller
         if(!$model_response['exists']){
             App::Abort(404);
         }
-        return redirect('/task')->with('message','タスクを削除しました。');
+        return redirect('/')->with('message','タスクを削除しました。');
     }
 
 }
