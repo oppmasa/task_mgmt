@@ -7,6 +7,13 @@
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
                 <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div class="alert alert-warning" role="alert">
+                            <h5 class="alert-heading">注意</h5>
+                            すでに登録されているメールアドレスは使用できません。<br>
+                            パスワードは半角英数字混合の8文字以上32文字以内です。
+                        </div>
+                    </div>
                     <form method="POST" action="{{ route('register.create') }}">
                         @csrf
 
