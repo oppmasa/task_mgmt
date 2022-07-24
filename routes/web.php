@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+//メール認証待機
+Route::get('/verify', function() {
+    return view('auth.verify');
+});
 
 Route::group(['middleware' => 'auth'], function () {
 //タスク
@@ -29,3 +33,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/task/update', [TaskController::class, 'update'])->name('update');
     Route::get('/task/delete/{task_id}', [TaskController::class, 'delete'])->name('delete');
 });
+
+//登録
+Route::get('/register/forms', [RegisterController::class, 'showRegisterForm'])->name('register.index');
+Route::post('/register/create', [RegisterController::class, 'create'])->name('register.create');
+Route::get('/register/confirmation/{email_confirmation_token}', [RegisterController::class, 'confirmation'])->name('register.confirmation');
+Route::get('/register/completed', [RegisterController::class, 'completed'])->name('register.completed');
+
+Auth::routes();

@@ -13,7 +13,6 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-
         $search_title = $request->search_title;
         $task_list = Task::TaskIndex($request);
         $check_list = self::CreatecheckList($request);
@@ -36,6 +35,7 @@ class TaskController extends Controller
     {
         $action = route('create');
         $user_name = Auth::User()->name;
+
         return view('task.add',compact('action','user_name'));
     }
 
