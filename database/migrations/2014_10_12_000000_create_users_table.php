@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('email_confirmation_token')->nullable();
+            $table->dateTime('email_verified_at')->nullable();
+            $table->tinyInteger('stop_flag')->default(1);
             $table->rememberToken();
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->datetime("created_at")->default(DB::raw('CURRENT_TIMESTAMP'));

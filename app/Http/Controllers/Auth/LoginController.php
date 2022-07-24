@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,6 +39,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $exists = User::where([['email', $credentials['email']],['stop_flag',0]])->exists();
+            if(!$exists){
+                Auth::logout();
+                return redirect("/login")->with('message','認証に失敗しました。');
+            }
+            return redirect()->route('index');
+        }
+
+        return redirect("login")->with('message','認証に失敗しました。');
     }
 
     protected function redirectPath()
