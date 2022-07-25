@@ -5,6 +5,11 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">タスク一覧</h4>
+                @if(!empty(session('message')))
+                    <div class="alert alert-danger" role="alert">
+                        {{session('message')}}
+                    </div>
+                @endif
                 <form action="{{route('index')}}" method="get">
                     <div class="col-lg-5">
                         <div class="input-group">
@@ -14,24 +19,19 @@
                     </div>
                 </form>
 
-                @if(!empty(session('message')))
-                    <div class="alert alert-danger" role="alert">
-                        {{session('message')}}
-                    </div>
-                @endif
                 <div class="text-end">
                     <a href="{{route('add')}}" class="btn btn-primary m-2">＋タスクの追加</a>
                 </div>
                 <div class="table-responsive">
-                    @if(!$task_list->isEmpty())
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="deadline" onclick="checkfunctiondeadline()" @if(!empty($check_list['deadline'])) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="deadline" onclick="checkdeadline()" @if(!empty($check_list['deadline'])) checked @endif>
                         <label class="form-check-label" for="inlineCheckbox1">期限超過のみ</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="completion_flag" onclick="checkfunctioncompletion()" @if(!empty($check_list['completion_flag'])) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="completion_flag" onclick="checkcompletion()" @if(!empty($check_list['completion_flag'])) checked @endif>
                         <label class="form-check-label" for="inlineCheckbox2">完了済みを表示</label>
                     </div>
+                    @if(!$task_list->isEmpty())
                     <table class="table table-hover" id="task_list">
                         <thead>
                         <tr>
@@ -59,7 +59,7 @@
                             {{ $task_list->onEachSide(5)->appends(request()->query())->links() }}
                         </div>
                     @else
-                        タスクが存在しません。
+                        <p class="mt-3">タスクが存在しません。</p>
                     @endif
                 </div>
             </div>
@@ -68,7 +68,7 @@
     </div>
 </div>
 <script>
-    function checkfunctiondeadline(){
+    function checkdeadline(){
         if ((document.getElementById("deadline")).checked) {
             location.href = '{{route('index',['deadline' => 'on'])}}';
         }else{
@@ -76,7 +76,7 @@
         }
     }
 
-    function checkfunctioncompletion(){
+    function checkcompletion(){
         if ((document.getElementById("completion_flag")).checked) {
             location.href = '{{route('index',['completion_flag' => 'on'])}}';
         }else{

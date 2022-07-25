@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/task/create', [TaskController::class, 'create'])->name('create');
     Route::get('/task/edit/{id}', [TaskController::class, 'edit'])->name('edit');
     Route::post('/task/update', [TaskController::class, 'update'])->name('update');
-    Route::get('/task/delete/{task_id}', [TaskController::class, 'delete'])->name('delete');
+    Route::post('/task/delete/{task_id}', [TaskController::class, 'delete'])->name('delete');
 });
 
 //登録
