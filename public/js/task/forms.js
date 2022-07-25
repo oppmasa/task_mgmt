@@ -5,3 +5,7 @@ function onDeleteConfirm(){
         document.getElementById("delete_form").submit();
     }
 }
+function onSubmit(){
+    document.getElementById("submit_form").submit();
+}
+
