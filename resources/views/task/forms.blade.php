@@ -1,5 +1,4 @@
-                    <form class="forms-sample" id="submit_form" action="{{$action}}" method="post">
-                        @csrf
+                     @csrf
                         <div class="form-group row mb-3">
                             <label for="exampleInputUsername2" class="col-sm-3 col-form-label">ユーザー名</label>
                             <div class="col-sm-9">
@@ -42,6 +41,5 @@
                                 @enderror
                             </div>
                         </div>
-                    </form>
 
 

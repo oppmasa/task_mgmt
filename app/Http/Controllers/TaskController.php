@@ -33,10 +33,8 @@ class TaskController extends Controller
 
     public function add()
     {
-        $action = route('create');
         $user_name = Auth::User()->name;
-
-        return view('task.add',compact('action','user_name'));
+        return view('task.add',compact('user_name'));
     }
 
     public function create(TaskCreateRequest $request)
@@ -54,10 +52,9 @@ class TaskController extends Controller
         if (!$exists) {
             return App::Abort(404);
         }
-        $action = route('update');
         $user_name = Auth::User()->name;
         $task = Task::find($task_id);
-        return view('task.edit',compact('action','user_name','task'));
+        return view('task.edit',compact('user_name','task'));
     }
 
     public function update(TaskUpdateRequest $request)

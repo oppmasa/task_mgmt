@@ -12,11 +12,13 @@
                                 {{session('message')}}
                             </div>
                         @endif
-                        @include('task.forms')
-                        <div class="col-sm-12 d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary me-2" onclick="onSubmit()">@if(!empty($task))更新@else追加@endif</button>
-                            <a class="btn btn-light" href="{{route('index')}}">キャンセル</a>
-                        </div>
+                        <form class="forms-sample" id="submit_form" action="{{route('create')}}" method="post">
+                            @include('task.forms')
+                            <div class="col-sm-12 d-flex justify-content-center">
+                                <button type="button" class="btn btn-primary me-2" onclick="onSubmit()">@if(!empty($task))更新@else追加@endif</button>
+                                <a class="btn btn-light" href="{{route('index')}}">キャンセル</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
