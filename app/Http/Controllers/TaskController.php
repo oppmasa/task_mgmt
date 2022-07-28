@@ -41,7 +41,7 @@ class TaskController extends Controller
     {
         $model_response = Task::TaskCreate($request);
         if($model_response['commit_bool']){
-            return redirect('/task/edit/'.$model_response['task_id'])->with('message','タスクを作成しました。');
+            return redirect('/')->with('message','タスクを作成しました。');
         }
         return redirect('/task/add')->with('message','タスクの作成に失敗しました。');
     }

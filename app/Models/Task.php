@@ -17,7 +17,6 @@ class Task extends Model
     //タスク一覧
     public function scopeTaskIndex($query, $request)
     {
-
         $where_list = self::CreateWhereList($request);
         //「期限超過のみ」にチェックされていた場合
         if(!empty($request->deadline)){
@@ -37,11 +36,6 @@ class Task extends Model
             $where_list[] = ['title', 'like', '%'.$request->search_title.'%'];
         }
 
-        //「期限超過のみ」にチェックされていた場合
-        if(!empty($request->deadline)){
-            $where_list[] = ['deadline', '!=', null];
-        }
-
         //「完了済みを表示」にチェックされていた場合
         if(empty($request->completion_flag)){
             $where_list[] = ['completion_flag', 0];
@@ -56,14 +50,14 @@ class Task extends Model
         $user_id = Auth::id();
         DB::beginTransaction();
         try {
-            $task_id = self::insertGetId([
+            self::insertGetId([
                 'user_id' => $user_id,
                 'title' => $request->title,
                 'contents' => $request->contents,
                 'deadline' => $request->deadline,
             ]);
             DB::commit();
-            return ["commit_bool" => true, 'task_id' => $task_id];
+            return ["commit_bool" => true];
         } catch
             (Exception $e) {
             DB::rollback();
